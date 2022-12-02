@@ -1,4 +1,5 @@
 const schemas = require('./schemas');
+const { Category } = require('../models');
 
 const validateUser = ({ email, displayName, password }) => {
     const emailValidate = schemas.emailSchema.validate(email);
@@ -23,6 +24,14 @@ const validateUser = ({ email, displayName, password }) => {
     return { type: null, message: '' };
 };
 
+const verifyId = async (a) => {
+    const categories = await Category.findAll({ attributes: ['id'] });
+    const categoriesId = categories.map((cat) => cat.id);
+    const result = categoriesId.every((id) => a.includes(id));
+    return result;
+};
+
 module.exports = {
     validateUser,
+    verifyId,
 };
