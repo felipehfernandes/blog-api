@@ -56,8 +56,24 @@ const getAll = async () => {
     return incompleteUsers;
 };
 
+const getById = async (id) => {
+    const user = await User.findByPk(Number(id));
+    
+    if (!user) {
+        return {
+        type: 'NOT_FOUND',
+        message: 'User does not exist',
+        };
+    }
+
+    const { password: _password, ...incompleteUser } = user.dataValues;
+
+    return { type: null, message: incompleteUser };
+};
+
 module.exports = {
     login,
     createUser,
     getAll,
+    getById,
 };
