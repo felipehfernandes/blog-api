@@ -7,5 +7,6 @@ const authenticationMiddleware = require('../middlewares/authentication.middlewa
 const router = express.Router();
 
 router.post('/', authenticationMiddleware, postMiddleware, postController.createPost);
+router.get('/', authenticationMiddleware, postController.getAll);
 
 module.exports = router;
