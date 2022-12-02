@@ -46,7 +46,18 @@ const createUser = async (reqBody) => {
     return { type: null, token };
 };
 
+const getAll = async () => {
+    const users = await User.findAll();
+    const incompleteUsers = users.map(({ dataValues }) => {
+        const { password: _password, ...incompleteUser } = dataValues;
+        return incompleteUser;
+    });
+
+    return incompleteUsers;
+};
+
 module.exports = {
     login,
     createUser,
+    getAll,
 };
